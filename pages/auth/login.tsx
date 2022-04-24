@@ -19,6 +19,7 @@ export default function Login({ csrfToken }: ServerSideProps) {
 
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
+    console.log(`CALLBACK URL -- ${callbackUrl}`);
 
     if (isSubmitting) {
       return;
