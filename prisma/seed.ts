@@ -11,7 +11,17 @@ const main = async () => {
     create: {
       name: "John Doe",
       email: "johndoe@mail.com",
+      username: "johndoe",
       password: await hashPassword("password"),
+      event_types: {
+        create: [
+          {
+            title: "John Doe Default Event Type",
+            description: "John Doe default event type for his account",
+            duration: 8,
+          },
+        ],
+      },
     },
   });
   const mary = await Prisma.user.upsert({
@@ -20,7 +30,18 @@ const main = async () => {
     create: {
       email: "marydoe@gmail.com",
       name: "Mary Doe",
+      username: "marydoe",
       password: await hashPassword("password"),
+      event_types: {
+        create: [
+          {
+            title: "Mary Doe Default Event Type",
+            url: "localhost:3000/booking/marydoe/0001",
+            description: "Mary Doe default event type for her account",
+            duration: 8,
+          },
+        ],
+      },
     },
   });
   console.log({ john, mary });
