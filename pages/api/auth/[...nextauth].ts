@@ -23,6 +23,14 @@ export default NextAuth({
           where: {
             email: credentials.email.toLowerCase(),
           },
+          include: {
+            event_types: {
+              select: {
+                id: true,
+              },
+              take: 1,
+            },
+          },
         });
 
         if (!user) return null;
@@ -40,8 +48,12 @@ export default NextAuth({
   callbacks: {
     jwt: ({ token, user }) => {
       // first time jwt callback is run, user object is available
+
       if (user) {
         token.id = user.id;
+        token.username = user.username;
+        const eventType = user.event_types;
+        token.defaultEventId = eventType[0]["id"];
       }
 
       return token;
@@ -49,6 +61,8 @@ export default NextAuth({
     session: ({ session, token }) => {
       if (token) {
         session.id = token.id;
+        session.username = token.username;
+        session.defaultEventId = token.defaultEventId;
       }
 
       return session;

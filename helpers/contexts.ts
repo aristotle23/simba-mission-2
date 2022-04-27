@@ -1,7 +1,16 @@
 import React from "react";
 
+interface setUserParam {
+  id: unknown;
+  username: unknown;
+  defaultEventId: unknown;
+}
 export const UserContext = React.createContext({
-  userId: null,
+  user: {
+    id: null,
+    username: null,
+    defaultEventId: null,
+  },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setUserId: () => {},
+  setUser: (e: setUserParam) => e,
 });

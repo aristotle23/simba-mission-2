@@ -104,6 +104,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       meeting: meeting,
     },
-    revalidate: 80,
   };
 };

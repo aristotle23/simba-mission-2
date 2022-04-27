@@ -7,21 +7,23 @@ import { UserContext } from "@helpers/contexts";
 import Shell from "@components/Shell";
 
 export default function Manage() {
-  const { userId } = useContext(UserContext);
   const [bookings, setBookings] = useState([]);
+  const { user } = useContext(UserContext);
+  const [eventUrl, setEventUrl] = useState("");
 
   useEffect(() => {
+    if (!user.id) return;
     axios
       .get("/api/bookingIndex", {
         params: {
-          userId,
+          userId: user.id,
         },
       })
       .then(({ data }) => {
         setBookings(data);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setEventUrl(`${window.location.origin}/booking/${user.username}/${user.defaultEventId}`);
+  }, [user]);
 
   return (
     <Shell>
@@ -32,6 +34,9 @@ export default function Manage() {
       </header>
       <main>
         <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <h4 className="text-lg font-bold">
+            Default EventType: <small className="text-sm font-medium">{eventUrl}</small>
+          </h4>
           <div className="px-4 py-6 sm:px-0">
             <div className="overflow-auto border-4 border-gray-200 border-dashed rounded-lg h-97">
               <div className="overflow-hidden bg-white shadow sm:rounded-lg">

@@ -7,8 +7,12 @@ import { UserContext } from "@helpers/contexts";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [userId, setUserId] = useState(null);
-  const value = { userId, setUserId };
+  const [user, setUser] = useState({
+    id: null,
+    username: null,
+    defaultEventId: null,
+  });
+  const value = { user, setUser };
   return (
     <UserContext.Provider value={value}>
       <SessionProvider session={session}>

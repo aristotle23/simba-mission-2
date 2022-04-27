@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, ReactNode, useContext, useEffect, useState } from "react";
+import React, { Fragment, ReactNode, useContext, useEffect } from "react";
 
 import { UserContext } from "@helpers/contexts";
 
@@ -9,7 +9,7 @@ export default function Shell(props: { children: ReactNode }) {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const router = useRouter();
-  const { setUserId } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     if (!loading && !session) {
@@ -21,8 +21,13 @@ export default function Shell(props: { children: ReactNode }) {
       });
     }
     if (status === "authenticated") {
-      setUserId(session.id);
+      setUser({
+        id: session.id,
+        username: session.username,
+        defaultEventId: session.defaultEventId,
+      });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, session]);
 
