@@ -21,7 +21,7 @@ export default function Shell(props: { children: ReactNode }) {
       });
     }
     if (status === "authenticated") {
-      if (session.id && session.username && session.defaultId) {
+      if (session.id && session.username && session.defaultEventId) {
         setUser({
           id: session.id,
           username: session.username,
