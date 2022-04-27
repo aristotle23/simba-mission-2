@@ -1,12 +1,15 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, ReactNode, useEffect } from "react";
+import React, { Fragment, ReactNode, useContext, useEffect, useState } from "react";
+
+import { UserContext } from "@helpers/contexts";
 
 export default function Shell(props: { children: ReactNode }) {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const router = useRouter();
+  const { setUserId } = useContext(UserContext);
 
   useEffect(() => {
     if (!loading && !session) {
@@ -16,6 +19,9 @@ export default function Shell(props: { children: ReactNode }) {
           callbackUrl: `${location.pathname}${location.search}`,
         },
       });
+    }
+    if (status === "authenticated") {
+      setUserId(session.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, session]);
@@ -41,30 +47,6 @@ export default function Shell(props: { children: ReactNode }) {
                       className="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md"
                       aria-current="page">
                       Bookings
-                    </a>
-
-                    <a
-                      href="#"
-                      className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                      Team
-                    </a>
-
-                    <a
-                      href="#"
-                      className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                      Projects
-                    </a>
-
-                    <a
-                      href="#"
-                      className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                      Calendar
-                    </a>
-
-                    <a
-                      href="#"
-                      className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                      Reports
                     </a>
                   </div>
                 </div>
@@ -92,30 +74,6 @@ export default function Shell(props: { children: ReactNode }) {
                 className="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md"
                 aria-current="page">
                 Bookings
-              </a>
-
-              <a
-                href="#"
-                className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                Team
-              </a>
-
-              <a
-                href="#"
-                className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                Projects
-              </a>
-
-              <a
-                href="#"
-                className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                Calendar
-              </a>
-
-              <a
-                href="#"
-                className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">
-                Reports
               </a>
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">

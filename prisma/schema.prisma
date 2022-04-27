@@ -25,22 +25,25 @@ model User {
 }
 
 model EventType {
-  id          String @id @default(uuid())
-  user        User   @relation(fields: [userId], references: [id])
+  id          String   @id @unique @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
   userId      Int
   title       String
   description String
   duration    Int
+  events      Events[]
 
   @@map(name: "event_types")
 }
 
 model Events {
-  id       Int         @id @default(autoincrement())
-  dateTime DateTime
-  attendee Attendees[]
-  User     User        @relation(fields: [userId], references: [id])
-  userId   Int
+  id          Int        @id @default(autoincrement())
+  dateTime    DateTime
+  attendee    Attendees?
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  eventType   EventType? @relation(fields: [eventTypeId], references: [id])
+  eventTypeId String?
 }
 
 model Attendees {
@@ -48,5 +51,5 @@ model Attendees {
   name    String
   email   String
   event   Events @relation(fields: [eventId], references: [id])
-  eventId Int
+  eventId Int    @unique
 }

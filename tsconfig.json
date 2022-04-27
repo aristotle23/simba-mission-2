@@ -33,6 +33,7 @@
     "compilerOptions": {
       "module": "CommonJS",
       "types": ["node"],
+      "moduleResolution": "node",
     }
   }
 }

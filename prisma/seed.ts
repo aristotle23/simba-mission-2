@@ -36,7 +36,6 @@ const main = async () => {
         create: [
           {
             title: "Mary Doe Default Event Type",
-            url: "localhost:3000/booking/marydoe/0001",
             description: "Mary Doe default event type for her account",
             duration: 8,
           },
@@ -44,7 +43,6 @@ const main = async () => {
       },
     },
   });
-  console.log({ john, mary });
 };
 main()
   .catch((e) => {
