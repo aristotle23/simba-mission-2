@@ -20,14 +20,12 @@ export default function Shell(props: { children: ReactNode }) {
         },
       });
     }
-    if (status === "authenticated") {
-      if (session.id && session.username && session.defaultEventId) {
-        setUser({
-          id: session.id,
-          username: session.username,
-          defaultEventId: session.defaultEventId,
-        });
-      }
+    if (status === "authenticated" && session) {
+      setUser({
+        id: session.id,
+        username: session.username,
+        defaultEventId: session.defaultEventId,
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
