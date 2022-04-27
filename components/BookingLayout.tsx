@@ -1,6 +1,4 @@
 import { Fragment, ReactNode } from "react";
-import { Interface } from "readline";
-import internal from "stream";
 
 interface meetingProps {
   meeting: {
