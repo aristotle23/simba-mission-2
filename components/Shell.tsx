@@ -21,11 +21,13 @@ export default function Shell(props: { children: ReactNode }) {
       });
     }
     if (status === "authenticated") {
-      setUser({
-        id: session.id,
-        username: session.username,
-        defaultEventId: session.defaultEventId,
-      });
+      if (session.id && session.username && session.defaultId) {
+        setUser({
+          id: session.id,
+          username: session.username,
+          defaultEventId: session.defaultEventId,
+        });
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
