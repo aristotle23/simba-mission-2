@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import prisma from "@helpers/prisma";
 
 export default async function booking(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(404).json({ message: "Can't request url on server" });
   }
-  const prisma = new PrismaClient();
   const data = req.body;
   const dateTime = new Date(data.dateTime);
 
