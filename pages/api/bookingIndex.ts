@@ -6,12 +6,12 @@ export default async function bookingIndex(req: NextApiRequest, res: NextApiResp
   if (req.method !== "GET") {
     return res.status(404).json("Can't requested url on server");
   }
+
   const { userId } = req.query;
-  console.log(userId);
 
   const meetings = await prisma.events.findMany({
     where: {
-      userId: parseInt(userId),
+      userId: parseInt(userId as string),
     },
     select: {
       dateTime: true,

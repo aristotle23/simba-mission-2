@@ -2,7 +2,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import React, { useState } from "react";
 
-import { UserContext } from "@helpers/contexts";
+import { UserContext, setUserParam } from "@helpers/contexts";
 
 import "../styles/globals.css";
 
@@ -12,7 +12,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     username: null,
     defaultEventId: null,
   });
-  const value = { user, setUser };
+  const value = {
+    user,
+    setUserState: function (data: setUserParam) {
+      setUser(data);
+    },
+  };
   return (
     <UserContext.Provider value={value}>
       <SessionProvider session={session}>

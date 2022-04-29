@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
+import { StaticImageData } from "next/image";
 
 import { verifyPassword } from "@helpers/auth";
 import prisma from "@helpers/prisma";
@@ -28,7 +29,6 @@ export default NextAuth({
               select: {
                 id: true,
               },
-              take: 1,
             },
           },
         });
@@ -37,7 +37,12 @@ export default NextAuth({
 
         const isCorrectPassword = await verifyPassword(credentials.password, user.password as string);
         if (isCorrectPassword) {
-          return user;
+          const { event_types, ...userInfo } = user;
+          const { id } = event_types[0];
+          return {
+            eventId: id,
+            ...userInfo,
+          };
         }
 
         // login failed
@@ -52,8 +57,7 @@ export default NextAuth({
       if (user) {
         token.id = user.id;
         token.username = user.username;
-        const eventType = user.event_types;
-        token.defaultEventId = eventType[0]["id"];
+        token.defaultEventId = user.eventId;
       }
 
       return token;

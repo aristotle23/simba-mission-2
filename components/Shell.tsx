@@ -9,7 +9,7 @@ export default function Shell(props: { children: ReactNode }) {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const router = useRouter();
-  const { setUser } = useContext(UserContext);
+  const { setUserState } = useContext(UserContext);
 
   useEffect(() => {
     if (!loading && !session) {
@@ -21,7 +21,7 @@ export default function Shell(props: { children: ReactNode }) {
       });
     }
     if (status === "authenticated" && session) {
-      setUser({
+      setUserState({
         id: session.id,
         username: session.username,
         defaultEventId: session.defaultEventId,

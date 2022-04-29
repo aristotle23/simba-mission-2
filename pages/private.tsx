@@ -7,7 +7,19 @@ import { UserContext } from "@helpers/contexts";
 import Shell from "@components/Shell";
 
 export default function Manage() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState([
+    {
+      dateTime: "",
+      eventType: {
+        duration: 0,
+        title: "",
+      },
+      attendee: {
+        name: "",
+        email: "",
+      },
+    },
+  ]);
   const { user } = useContext(UserContext);
   const [eventUrl, setEventUrl] = useState("");
 
@@ -20,6 +32,7 @@ export default function Manage() {
         },
       })
       .then(({ data }) => {
+        console.log(data);
         setBookings(data);
       });
     setEventUrl(`${window.location.origin}/booking/${user.username}/${user.defaultEventId}`);

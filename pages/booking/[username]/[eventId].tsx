@@ -82,9 +82,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const prisma = new PrismaClient();
   const meeting = await prisma.eventType.findFirst({
     where: {
-      id: eventId,
+      id: eventId as string,
       user: {
-        username: username,
+        username: username as string,
       },
     },
     select: {

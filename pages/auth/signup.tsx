@@ -6,6 +6,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function Signup() {
         name,
         email,
         password,
+        username,
       })
       .then(() => {
         alert("success");
@@ -62,6 +64,16 @@ export default function Signup() {
         required
         value={email}
         onInput={(e) => setEmail(e.currentTarget.value)}
+        className="block border border-neutral-300 focus:ring-neutral-900"
+      />
+      <input
+        id="username"
+        name="username"
+        type="text"
+        placeholder="Username"
+        required
+        value={username}
+        onInput={(e) => setUsername(e.currentTarget.value)}
         className="block border border-neutral-300 focus:ring-neutral-900"
       />
       <input
