@@ -32,7 +32,6 @@ export default function Manage() {
         },
       })
       .then(({ data }) => {
-        console.log(data);
         setBookings(data);
       });
     setEventUrl(`${window.location.origin}/booking/${user.username}/${user.defaultEventId}`);
