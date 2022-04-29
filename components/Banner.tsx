@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-export default function Banner(props: any) {
+export default function Banner(props: { isDismissable?: boolean; message: string }) {
   let btnDismiss = null;
   if (props.isDismissable) {
     btnDismiss = (
