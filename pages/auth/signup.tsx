@@ -9,6 +9,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     async function redirectOnLogin() {
@@ -41,7 +42,7 @@ export default function Signup() {
       .catch((e) => {
         setIsSubmitting(false);
         const errorMessage = e.response?.data?.message;
-        alert(errorMessage || e.message);
+        setErrorMessage(errorMessage || e.message);
       });
   }
 
@@ -56,6 +57,10 @@ export default function Signup() {
               alt="Workflow"
             />
             <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">Sign Up</h2>
+
+            <p className="mt-2 text-sm text-center text-gray-600">
+              <label className="font-medium text-indigo-600">{errorMessage}</label>
+            </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" value="true" />

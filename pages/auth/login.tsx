@@ -6,6 +6,8 @@ import { Fragment, useState } from "react";
 
 import { getSession } from "@helpers/auth";
 
+import Banner from "@components/Banner";
+
 interface ServerSideProps {
   csrfToken: string;
 }
@@ -15,6 +17,7 @@ export default function Login({ csrfToken }: ServerSideProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [erroMessage, setErroMessage] = useState("");
 
   const callbackUrl = typeof router.query?.callbackUrl === "string" ? router.query.callbackUrl : "/private";
 
@@ -37,6 +40,10 @@ export default function Login({ csrfToken }: ServerSideProps) {
     if (!response) {
       throw new Error("Received empty response from next auth");
     }
+    if (response.status === 401) {
+      setErroMessage("Inccorrect Email or Password");
+      setIsSubmitting(false);
+    }
 
     if (!response.error) {
       // we're logged in! let's do a hard refresh to the desired url
@@ -58,6 +65,9 @@ export default function Login({ csrfToken }: ServerSideProps) {
             <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">
               Sign in to your account
             </h2>
+            <p className="mt-2 text-sm text-center text-gray-600">
+              <label className="font-medium text-indigo-600">{erroMessage}</label>
+            </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken || undefined} hidden />
@@ -98,7 +108,7 @@ export default function Login({ csrfToken }: ServerSideProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none disabled:bg-indigo-400 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <svg
                     className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
