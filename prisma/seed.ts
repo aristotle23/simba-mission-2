@@ -7,7 +7,12 @@ const Prisma = new PrismaClient();
 const main = async () => {
   await Prisma.user.upsert({
     where: { email: "John Doe" },
-    update: {},
+    update: {
+      name: "John Doe",
+      email: "johndoe@mail.com",
+      username: "johndoe",
+      password: await hashPassword("password"),
+    },
     create: {
       name: "John Doe",
       email: "johndoe@mail.com",
@@ -26,7 +31,12 @@ const main = async () => {
   });
   await Prisma.user.upsert({
     where: { email: "marydoe@gmail.com" },
-    update: {},
+    update: {
+      email: "marydoe@gmail.com",
+      name: "Mary Doe",
+      username: "marydoe",
+      password: await hashPassword("password"),
+    },
     create: {
       email: "marydoe@gmail.com",
       name: "Mary Doe",
@@ -45,7 +55,7 @@ const main = async () => {
   });
 };
 main()
-  .catch((e) => {
+  .catch(() => {
     process.exit();
   })
   .finally(async () => {
