@@ -40,6 +40,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email: userEmail,
       username: username,
       password: hashedPassword,
+      event_types: {
+        create: {
+          title: `${name} Default Event Type`,
+          description: `${name} default event type for his account`,
+          duration: 12,
+        },
+      },
     },
   });
 

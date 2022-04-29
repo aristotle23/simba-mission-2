@@ -5,7 +5,7 @@ import { hashPassword } from "../helpers/auth";
 const Prisma = new PrismaClient();
 
 const main = async () => {
-  const john = await Prisma.user.upsert({
+  await Prisma.user.upsert({
     where: { email: "John Doe" },
     update: {},
     create: {
@@ -24,7 +24,7 @@ const main = async () => {
       },
     },
   });
-  const mary = await Prisma.user.upsert({
+  await Prisma.user.upsert({
     where: { email: "marydoe@gmail.com" },
     update: {},
     create: {
@@ -46,7 +46,6 @@ const main = async () => {
 };
 main()
   .catch((e) => {
-    console.log(e);
     process.exit();
   })
   .finally(async () => {
